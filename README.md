@@ -23,7 +23,7 @@ A website for tracking clients by their stylist
 * For Mac users, download MySQL here: https://dev.mysql.com/downloads/file/?id=484914
 * For Windows users, download MySQL here: https://dev.mysql.com/downloads/file/?id=484919
 * Install MySQL and set the system path, more information on how to do that can be found here: https://www.learnhowtoprogram.com/c-and-net/getting-started-with-c/installing-and-configuring-mysql
-* Import the deryck_jackson.sql file into MYSQL Workbench under "Server -> Data Import -> Import from Self-Contained File
+* Import the deryck_jackson.sql file into MYSQL Workbench under "Server -> Data Import -> Import from Self-Contained File"
 
 **OR**
 
