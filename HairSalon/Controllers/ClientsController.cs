@@ -20,8 +20,23 @@ namespace HairSalon.Controllers
     public ActionResult Index()
     {
       dynamic model = new ExpandoObject();
-      model.Clients = _db.Clients.Include(rest => rest.Stylist).ToList();
+      model.Clients = _db.Clients.Include(client => client.Stylist).ToList();
       model.Stylists = _db.Stylists.ToList();
+      ViewBag.StylistId = new SelectList(_db.Stylists, "StylistId", "Name");
+      return View(model);
+    }
+
+    [HttpPost]
+    public ActionResult Index(int StylistId)
+    {
+      int inputId = StylistId;
+      dynamic model = new ExpandoObject();
+      model.Clients =  _db.Clients
+        .Include(client => client.Stylist)
+        .Where(client => client.StylistId == inputId)
+        .ToList();
+      model.Stylists = _db.Stylists.ToList();
+      ViewBag.StylistId = new SelectList(_db.Stylists, "StylistId", "Name");
       return View(model);
     }
 
@@ -63,7 +78,7 @@ namespace HairSalon.Controllers
     public ActionResult Edit(int id)
     {
       Client thisClient = _db.Clients.FirstOrDefault(client => client.ClientId == id);
-      ViewBag.ClientId = new SelectList(_db.Stylists, "StylistId", "Name");
+      ViewBag.StylistId = new SelectList(_db.Stylists, "StylistId", "Name");
       return View(thisClient);
     }
 

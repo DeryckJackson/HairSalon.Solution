@@ -16,16 +16,41 @@ else if (@Model.Clients.Count == 0)
 {
   <p>No Clients have been added yet.</p>
   <p>@Html.ActionLink("Add a new Client", "Create")</p>
+  <p>@Html.ActionLink("Add a new Stylist", "Create", "Stylists")</p>
 }
 else
 {
-  <ul>
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Client</th>
+      <th scope="col">Stylist</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
   @foreach (Client client in Model.Clients)
   {
-    <li>@Html.ActionLink($"{client.Name}", "Details", new { id = client.ClientId}) | Stylist: @client.Stylist.Name</li>
+    <tr>
+      <th scope="row">@Html.ActionLink($"{client.Name}", "Details", new { id = client.ClientId})</th>
+      <td>@client.Stylist.Name</td>
+      <td>@Html.ActionLink("Edit", "Edit", new { id = client.ClientId })</td>
+      <td>@Html.ActionLink("Delete", "Delete", new { id = client.ClientId })</td>
+    </tr>
   }
-  </ul>
-  <p>@Html.ActionLink("Add a new Client", "Create")</p>
+  </tbody>
+</table>
+<p>@Html.ActionLink("Add a new Client", "Create")</p>
+<p>@Html.ActionLink("Add a new Stylist", "Create", "Stylists")</p>
 }
 
+<h4>Filter clients by stylist:</h4>
+@using (Html.BeginForm())
+{
+  @Html.DropDownList("StylistId")
+  <input type="submit" class="btn btn-primary" />
+}
+
+<p>@Html.ActionLink("Show all clients", "Index")</p>
 <p>@Html.ActionLink("Home", "Index", "Home")</p>
