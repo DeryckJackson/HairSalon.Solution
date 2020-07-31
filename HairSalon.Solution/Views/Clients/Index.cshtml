@@ -1,0 +1,31 @@
+@{
+  Layout = "_Layout";
+}
+
+@using HairSalon.Models;
+@model dynamic;
+
+<h1 class="jumbotron">Clients</h1>
+
+@if (@Model.Stylists.Count == 0)
+{
+  <h3>No Stylists have been added yet. Would you like to add one now?</h3>
+  <h3>@Html.ActionLink("Add a new stylist?", "Create", "Stylists")</h3>
+} 
+else if (@Model.Clients.Count == 0)
+{
+  <p>No Clients have been added yet.</p>
+  <p>@Html.ActionLink("Add a new Client", "Create")</p>
+}
+else
+{
+  <ul>
+  @foreach (Client client in Model.Clients)
+  {
+    <li>@Html.ActionLink($"{client.Name}", "Details", new { id = client.ClientId}) | Stylist: @client.Stylist.Name</li>
+  }
+  </ul>
+  <p>@Html.ActionLink("Add a new Client", "Create")</p>
+}
+
+<p>@Html.ActionLink("Home", "Index", "Home")</p>
