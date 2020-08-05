@@ -17,11 +17,31 @@ namespace HairSalon.Controllers
       _db = db;
     }
 
-    public ActionResult Index()
+    public ActionResult Index(string sortOrder)
     {
       dynamic model = new ExpandoObject();
-      model.Clients = _db.Clients.Include(client => client.Stylist).ToList();
-      model.Stylists = _db.Stylists.ToList();
+      ViewBag.ClientSort = sortOrder == "client" ? "client_desc" : "client";
+
+      switch(sortOrder)
+      {
+        case "client":
+          model.Clients = _db.Clients.Include(client => client.Stylist)
+            .OrderBy(client => client.Name)
+            .ToList();
+          model.Stylists = _db.Stylists.ToList();
+          break;
+        case "client_desc":
+          model.Clients = _db.Clients.Include(client => client.Stylist)
+            .OrderByDescending(client => client.Name)
+            .ToList();
+          model.Stylists = _db.Stylists.ToList();
+          break;
+        default:
+          model.Clients = _db.Clients.Include(client => client.Stylist).ToList();
+          model.Stylists = _db.Stylists.ToList();
+          break;
+      }
+      
       ViewBag.StylistId = new SelectList(_db.Stylists, "StylistId", "Name");
       return View(model);
     }
