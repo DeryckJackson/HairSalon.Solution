@@ -20,7 +20,7 @@ else if (@Model.Clients.Count == 0)
 }
 else
 {
-@using (Html.BeginForm("Index", "Clients", FormMethod.Get))
+@using (Html.BeginForm("Index", "Clients", FormMethod.Getgit))
 {
   <p>
   Find by client name: @Html.TextBox("searchString")

@@ -33,20 +33,20 @@ A website for tracking clients by their stylist
 DROP DATABASE IF EXISTS `deryck_jackson`;
 CREATE DATABASE `deryck_jackson`;
 
-USE `FirstName_LastName`;
+USE `deryck_jackson`;
 
 CREATE TABLE `clients` (
-  `clientId` int NOT NULL AUTO_INCREMENT,
+  `ClientId` int NOT NULL AUTO_INCREMENT,
   `Name` varchar(255) NOT NULL,
-  `stylistId` int DEFAULT '0',
-  PRIMARY KEY (`clientId`)
+  `StylistId` int DEFAULT '0',
+  PRIMARY KEY (`ClientId`)
 );
 
 CREATE TABLE `stylists` (
-  `stylistId` int NOT NULL AUTO_INCREMENT,
+  `StylistId` int NOT NULL AUTO_INCREMENT,
   `Name` varchar(255) NOT NULL,
   `Details` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`stylistId`)
+  PRIMARY KEY (`StylistId`)
 );
 ```
 * Clone the GitHub repository by running `git clone https://github.com/pagrimm/BestRestaurants.Solution.git` in the terminal
