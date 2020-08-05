@@ -17,37 +17,44 @@ namespace HairSalon.Controllers
       _db = db;
     }
 
-    public ActionResult Index(string sortOrder)
+    public ActionResult Index(string sortOrder, string searchString)
     {
       dynamic model = new ExpandoObject();
       ViewBag.ClientSort = sortOrder == "client" ? "client_desc" : "client";
       ViewBag.StylistSort = sortOrder == "stylist" ? "stylist_desc" : "stylist";
 
-      switch(sortOrder)
+      if (!string.IsNullOrEmpty(searchString))
       {
-        case "client":
-          model.Clients = _db.Clients.Include(client => client.Stylist)
-            .OrderBy(client => client.Name)
-            .ToList();
-          break;
-        case "client_desc":
-          model.Clients = _db.Clients.Include(client => client.Stylist)
-            .OrderByDescending(client => client.Name)
-            .ToList();
-          break;
-        case "stylist":
-          model.Clients = _db.Clients.Include(client => client.Stylist)
-            .OrderBy(client => client.Stylist.Name)
-            .ToList();
-          break;
-        case "stylist_desc":
-          model.Clients = _db.Clients.Include(client => client.Stylist)
-            .OrderByDescending(client => client.Stylist.Name)
-            .ToList();
-          break;
-        default:
-          model.Clients = _db.Clients.Include(client => client.Stylist).ToList();
-          break;
+        model.Clients = _db.Clients.Where(client => client.Name.Contains(searchString)).ToList();
+      }
+      else
+      {
+        switch(sortOrder)
+        {
+          case "client":
+            model.Clients = _db.Clients.Include(client => client.Stylist)
+              .OrderBy(client => client.Name)
+              .ToList();
+            break;
+          case "client_desc":
+            model.Clients = _db.Clients.Include(client => client.Stylist)
+              .OrderByDescending(client => client.Name)
+              .ToList();
+            break;
+          case "stylist":
+            model.Clients = _db.Clients.Include(client => client.Stylist)
+              .OrderBy(client => client.Stylist.Name)
+              .ToList();
+            break;
+          case "stylist_desc":
+            model.Clients = _db.Clients.Include(client => client.Stylist)
+              .OrderByDescending(client => client.Stylist.Name)
+              .ToList();
+            break;
+          default:
+            model.Clients = _db.Clients.Include(client => client.Stylist).ToList();
+            break;
+        }
       }
 
       model.Stylists = _db.Stylists.ToList();

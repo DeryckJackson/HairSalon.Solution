@@ -20,6 +20,14 @@ else if (@Model.Clients.Count == 0)
 }
 else
 {
+@using (Html.BeginForm("Index", "Clients", FormMethod.Get))
+{
+  <p>
+  Find by client name: @Html.TextBox("searchString")
+  <input type="submit" class="btn btn-primary" value="Search" />
+  </p>
+}
+
 <table class="table">
   <thead class="thead-light">
     <tr>
