@@ -24,7 +24,7 @@ else
   <thead class="thead-light">
     <tr>
       <th scope="col">@Html.ActionLink("Client", "Index", new { sortOrder = ViewBag.ClientSort })</th>
-      <th scope="col">Stylist</th>
+      <th scope="col">@Html.ActionLink("Stylist", "Index", new { sortOrder = ViewBag.StylistSort })</th>
       <th></th>
       <th></th>
     </tr>

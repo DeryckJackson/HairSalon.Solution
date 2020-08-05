@@ -21,6 +21,7 @@ namespace HairSalon.Controllers
     {
       dynamic model = new ExpandoObject();
       ViewBag.ClientSort = sortOrder == "client" ? "client_desc" : "client";
+      ViewBag.StylistSort = sortOrder == "stylist" ? "stylist_desc" : "stylist";
 
       switch(sortOrder)
       {
@@ -28,20 +29,28 @@ namespace HairSalon.Controllers
           model.Clients = _db.Clients.Include(client => client.Stylist)
             .OrderBy(client => client.Name)
             .ToList();
-          model.Stylists = _db.Stylists.ToList();
           break;
         case "client_desc":
           model.Clients = _db.Clients.Include(client => client.Stylist)
             .OrderByDescending(client => client.Name)
             .ToList();
-          model.Stylists = _db.Stylists.ToList();
+          break;
+        case "stylist":
+          model.Clients = _db.Clients.Include(client => client.Stylist)
+            .OrderBy(client => client.Stylist.Name)
+            .ToList();
+          break;
+        case "stylist_desc":
+          model.Clients = _db.Clients.Include(client => client.Stylist)
+            .OrderByDescending(client => client.Stylist.Name)
+            .ToList();
           break;
         default:
           model.Clients = _db.Clients.Include(client => client.Stylist).ToList();
-          model.Stylists = _db.Stylists.ToList();
           break;
       }
-      
+
+      model.Stylists = _db.Stylists.ToList();
       ViewBag.StylistId = new SelectList(_db.Stylists, "StylistId", "Name");
       return View(model);
     }
